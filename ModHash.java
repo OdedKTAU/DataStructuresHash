@@ -1,13 +1,29 @@
+import java.util.Random;
 
 public class ModHash {
+	long a;
+	long b;
+	int m;
+	long p;
+	
+	public ModHash(long a, long b, int m, long p) {
+		this.a = a;
+		this.b = b;
+		this.m = m;
+		this.p = p;
+	}
 	
 	public static ModHash GetFunc(int m, long p){
-		// TODO implement random choice of mod function from family
-		return null;
+		Random random = new Random();
+		
+		long a = random.nextLong(p);
+		long b = random.nextLong(p);
+		
+		return new ModHash(a,b,m,p);
 	}
 	
 	public int Hash(long key) {
-		// TODO implement hash function
-		return 0;
+		long result = Math.floorMod(Math.floorMod(this.a*key - this.b, p), m);
+		return (int) result;
 	}
 }

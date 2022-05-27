@@ -30,17 +30,26 @@ public abstract class OAHashTable implements IHashTable {
 	
 	@Override
 	public void Insert(HashTableElement hte) throws TableIsFullException,KeyAlreadyExistsException {
+		int first_deleted_index = -1;
 		int i = 0;
+		
 		for (; i < this.size; i++) {
 			int searched_index = Hash(hte.GetKey(), i);
 			
-			if ((this.table[searched_index] == null) || (this.table[searched_index].GetKey() == -1)) {
+			if ((this.table[searched_index] == null)) {
 				this.table[searched_index] = hte;
 				return;
+			}
+			if ((this.table[searched_index].GetKey() == -1) && (first_deleted_index < 0)) {
+				first_deleted_index = searched_index;
 			}
 			if (this.table[searched_index].GetKey() == hte.GetKey()) {
 				throw new KeyAlreadyExistsException(hte); 
 			} 
+		}
+		if (first_deleted_index >= 0) {
+			this.table[first_deleted_index] = hte;
+			return;
 		}
 		throw new TableIsFullException(hte);
 	}

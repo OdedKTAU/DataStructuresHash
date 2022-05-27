@@ -6,7 +6,7 @@ public class DoubleHashTable extends OAHashTable {
 	public DoubleHashTable(int m, long p) {
 		super(m);
 		this.hashParams = ModHash.GetFunc(m, p);
-		this.hashParams_2 = ModHash.GetFunc(m-2, p);
+		this.hashParams_2 = ModHash.GetFunc(m-1, p);
 	}
 	
 	@Override

@@ -9,8 +9,8 @@ public class AQPHashTable extends OAHashTable {
 	
 	@Override
 	public int Hash(long x, int i) {
-		int alt = (int) Math.pow(-1,i);
-		return Math.floorMod(this.hashParams.Hash(x) + (alt*(i*i)), this.size);
+		int direction = (int) Math.pow(-1,i);
+		return Math.floorMod(this.hashParams.Hash(x) + (direction*(i*i)), this.size);
 	}
 	
 }

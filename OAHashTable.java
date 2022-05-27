@@ -34,7 +34,7 @@ public abstract class OAHashTable implements IHashTable {
 		for (; i < this.table.length; i++) {
 			int searched_index = Hash(hte.GetKey(), i);
 			
-			if (this.table[searched_index] == null) {
+			if ((this.table[searched_index] == null) || (this.table[searched_index].GetKey() == -1)) {
 				this.table[searched_index] = hte;
 				return;
 			}
@@ -55,7 +55,8 @@ public abstract class OAHashTable implements IHashTable {
 				throw new KeyDoesntExistException(key);
 			}
 			if (this.table[searched_index].GetKey() == key) {
-				this.table[searched_index] = new HashTableElement(-1, -1); 
+				this.table[searched_index] = new HashTableElement(-1, -1);
+				return;
 			} 
 		}
 		throw new KeyDoesntExistException(key);

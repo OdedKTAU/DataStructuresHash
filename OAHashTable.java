@@ -15,7 +15,7 @@ public abstract class OAHashTable implements IHashTable {
 	public HashTableElement Find(long key) {
 		
 		int i = 0;
-		for (; i < this.table.length; i++) {
+		for (; i < this.size; i++) {
 			int searched_index = Hash(key, i);
 			
 			if (this.table[searched_index] == null) {
@@ -31,7 +31,7 @@ public abstract class OAHashTable implements IHashTable {
 	@Override
 	public void Insert(HashTableElement hte) throws TableIsFullException,KeyAlreadyExistsException {
 		int i = 0;
-		for (; i < this.table.length; i++) {
+		for (; i < this.size; i++) {
 			int searched_index = Hash(hte.GetKey(), i);
 			
 			if ((this.table[searched_index] == null) || (this.table[searched_index].GetKey() == -1)) {
@@ -48,7 +48,7 @@ public abstract class OAHashTable implements IHashTable {
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
 		int i = 0;
-		for (; i < this.table.length; i++) {
+		for (; i < this.size; i++) {
 			int searched_index = Hash(key, i);
 			
 			if (this.table[searched_index] == null) {

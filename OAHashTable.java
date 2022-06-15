@@ -15,7 +15,7 @@ public abstract class OAHashTable implements IHashTable {
 	public HashTableElement Find(long key) {
 		
 		int i = 0;
-		for (; i < this.size; i++) {
+		for (; i < this.size; i++) {// Perform probe sequence
 			int searched_index = Hash(key, i);
 			
 			if (this.table[searched_index] == null) {
@@ -33,21 +33,30 @@ public abstract class OAHashTable implements IHashTable {
 		int first_deleted_index = -1;
 		int i = 0;
 		
-		for (; i < this.size; i++) {
+		for (; i < this.size; i++) { // Perform probe sequence
 			int searched_index = Hash(hte.GetKey(), i);
 			
-			if ((this.table[searched_index] == null)) {
-				this.table[searched_index] = hte;
-				return;
+			if ((this.table[searched_index] == null)) { // Found a vacant cell
+				
+				if (first_deleted_index >= 0) { // Insert at first deleted index if exists
+					this.table[first_deleted_index] = hte;
+					return;
+				}
+				else { // Insert into current index
+					this.table[searched_index] = hte;
+					return;
+				}
+				
 			}
 			if ((this.table[searched_index].GetKey() == -1) && (first_deleted_index < 0)) {
-				first_deleted_index = searched_index;
+				first_deleted_index = searched_index; // Save index of first deleted cell 
+				continue;
 			}
 			if (this.table[searched_index].GetKey() == hte.GetKey()) {
 				throw new KeyAlreadyExistsException(hte); 
 			} 
 		}
-		if (first_deleted_index >= 0) {
+		if (first_deleted_index >= 0) { // Insert at first deleted index if exists
 			this.table[first_deleted_index] = hte;
 			return;
 		}
@@ -57,13 +66,13 @@ public abstract class OAHashTable implements IHashTable {
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
 		int i = 0;
-		for (; i < this.size; i++) {
+		for (; i < this.size; i++) { // Perform probe sequence
 			int searched_index = Hash(key, i);
 			
 			if (this.table[searched_index] == null) {
 				throw new KeyDoesntExistException(key);
 			}
-			if (this.table[searched_index].GetKey() == key) {
+			if (this.table[searched_index].GetKey() == key) { // Mark the relevant cell as deleted
 				this.table[searched_index] = new HashTableElement(-1, -1);
 				return;
 			} 

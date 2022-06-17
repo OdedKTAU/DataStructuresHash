@@ -1,3 +1,6 @@
+//Name: Oded Kesler
+//ID: 200973212
+//Username: odedkesler1
 
 public class HashTableElement{
 	private long key;

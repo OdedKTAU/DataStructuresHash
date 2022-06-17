@@ -1,3 +1,7 @@
+//Name: Oded Kesler
+//ID: 200973212
+//Username: odedkesler1
+
 import java.util.Random;
 
 public class ModHash {
